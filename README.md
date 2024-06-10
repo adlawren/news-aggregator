@@ -58,5 +58,5 @@ bundle exec rake solid_queue:start
 Start the Rails server:
 
 ```sh
-bundle exec rails s
+./bin/dev
 ```
