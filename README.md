@@ -11,7 +11,7 @@ rbenv install $(cat .ruby-version)
 nodenv install $(cat .node-version)
 ```
 
-Install Yarn:
+Prepare Yarn:
 
 ```sh
 corepack enable
