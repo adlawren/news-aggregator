@@ -1,0 +1,11 @@
+default: &default
+  urls:
+    - https://www.wired.com/feed/tag/ai/latest/rss # Wired AI
+development:
+ <<: *default
+
+test:
+ <<: *default
+
+production:
+ <<: *default

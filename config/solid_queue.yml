@@ -1,0 +1,22 @@
+default: &default
+  dispatchers:
+    - polling_interval: 1
+      batch_size: 500
+      recurring_tasks:
+        fetch_feeds_job:
+          class: FetchFeedsJob
+          schedule: "0 */6 * * *" # https://crontab.guru/#0_*/6_*_*_*
+  workers:
+    - queues: "*"
+      threads: 3
+      processes: 1
+      polling_interval: 0.1
+
+development:
+ <<: *default
+
+test:
+ <<: *default
+
+production:
+ <<: *default
