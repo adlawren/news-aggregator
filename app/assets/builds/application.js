@@ -1676,7 +1676,7 @@ var require_react_development = __commonJS({
           }
           return dispatcher.useContext(Context2);
         }
-        function useState3(initialState) {
+        function useState4(initialState) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useState(initialState);
         }
@@ -1688,7 +1688,7 @@ var require_react_development = __commonJS({
           var dispatcher = resolveDispatcher();
           return dispatcher.useRef(initialValue);
         }
-        function useEffect3(create, deps) {
+        function useEffect4(create, deps) {
           var dispatcher = resolveDispatcher();
           return dispatcher.useEffect(create, deps);
         }
@@ -2471,7 +2471,7 @@ var require_react_development = __commonJS({
         exports.useContext = useContext3;
         exports.useDebugValue = useDebugValue;
         exports.useDeferredValue = useDeferredValue;
-        exports.useEffect = useEffect3;
+        exports.useEffect = useEffect4;
         exports.useId = useId;
         exports.useImperativeHandle = useImperativeHandle;
         exports.useInsertionEffect = useInsertionEffect;
@@ -2479,7 +2479,7 @@ var require_react_development = __commonJS({
         exports.useMemo = useMemo3;
         exports.useReducer = useReducer;
         exports.useRef = useRef3;
-        exports.useState = useState3;
+        exports.useState = useState4;
         exports.useSyncExternalStore = useSyncExternalStore;
         exports.useTransition = useTransition;
         exports.version = ReactVersion;
@@ -2975,9 +2975,9 @@ var require_react_dom_development = __commonJS({
         if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== "undefined" && typeof __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart === "function") {
           __REACT_DEVTOOLS_GLOBAL_HOOK__.registerInternalModuleStart(new Error());
         }
-        var React7 = require_react();
+        var React9 = require_react();
         var Scheduler = require_scheduler();
-        var ReactSharedInternals = React7.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+        var ReactSharedInternals = React9.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
         var suppressWarning = false;
         function setSuppressWarning(newSuppressWarning) {
           {
@@ -4582,7 +4582,7 @@ var require_react_dom_development = __commonJS({
           {
             if (props.value == null) {
               if (typeof props.children === "object" && props.children !== null) {
-                React7.Children.forEach(props.children, function(child) {
+                React9.Children.forEach(props.children, function(child) {
                   if (child == null) {
                     return;
                   }
@@ -29882,13 +29882,13 @@ var AttributeObserver = class {
   }
 };
 function add(map, key, value) {
-  fetch(map, key).add(value);
+  fetch2(map, key).add(value);
 }
 function del(map, key, value) {
-  fetch(map, key).delete(value);
+  fetch2(map, key).delete(value);
   prune(map, key);
 }
-function fetch(map, key) {
+function fetch2(map, key) {
   let values = map.get(key);
   if (!values) {
     values = /* @__PURE__ */ new Set();
@@ -36920,14 +36920,14 @@ enableDismissTrigger(Toast);
 defineJQueryPlugin(Toast);
 
 // app/javascript/components/index.jsx
-var import_react4 = __toESM(require_react());
+var import_react6 = __toESM(require_react());
 var import_client = __toESM(require_client());
 
 // app/javascript/components/App.jsx
-var import_react3 = __toESM(require_react());
+var import_react5 = __toESM(require_react());
 
 // app/javascript/routes/index.jsx
-var import_react2 = __toESM(require_react());
+var import_react4 = __toESM(require_react());
 
 // node_modules/react-router-dom/dist/index.js
 var React2 = __toESM(require_react());
@@ -38837,21 +38837,47 @@ function useViewTransitionState(to, opts) {
 }
 
 // app/javascript/components/Home.jsx
+var import_react3 = __toESM(require_react());
+
+// app/javascript/components/ArticleList.jsx
+var import_react2 = __toESM(require_react());
+
+// app/javascript/components/Article.jsx
 var import_react = __toESM(require_react());
-var Home_default = () => /* @__PURE__ */ import_react.default.createElement("b", null, "Hello from React!");
+var Article = (props) => {
+  return /* @__PURE__ */ import_react.default.createElement("div", null, /* @__PURE__ */ import_react.default.createElement("div", null, "Title: ", props.title), /* @__PURE__ */ import_react.default.createElement("div", null, "Description: ", props.description), /* @__PURE__ */ import_react.default.createElement("div", null, "URL: ", /* @__PURE__ */ import_react.default.createElement("a", { href: props.url }, props.url)));
+};
+var Article_default = Article;
+
+// app/javascript/components/ArticleList.jsx
+var ArticleList = () => {
+  var [articles, setArticles] = (0, import_react2.useState)([]);
+  (0, import_react2.useEffect)(() => {
+    fetch("http://127.0.0.1:3000/api/articles").then((response) => {
+      return response.json();
+    }).then((data) => {
+      setArticles(data);
+    });
+  }, []);
+  return /* @__PURE__ */ import_react2.default.createElement("div", null, articles.map((article) => /* @__PURE__ */ import_react2.default.createElement(Article_default, { title: article["title"], description: article["description"], url: article["url"] })));
+};
+var ArticleList_default = ArticleList;
+
+// app/javascript/components/Home.jsx
+var Home_default = () => /* @__PURE__ */ import_react3.default.createElement(ArticleList_default, null);
 
 // app/javascript/routes/index.jsx
-var routes_default = /* @__PURE__ */ import_react2.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react2.default.createElement(Routes, null, /* @__PURE__ */ import_react2.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react2.default.createElement(Home_default, null) })));
+var routes_default = /* @__PURE__ */ import_react4.default.createElement(BrowserRouter, null, /* @__PURE__ */ import_react4.default.createElement(Routes, null, /* @__PURE__ */ import_react4.default.createElement(Route, { path: "/", element: /* @__PURE__ */ import_react4.default.createElement(Home_default, null) })));
 
 // app/javascript/components/App.jsx
-var App_default = (props) => /* @__PURE__ */ import_react3.default.createElement(import_react3.default.Fragment, null, routes_default);
+var App_default = (props) => /* @__PURE__ */ import_react5.default.createElement(import_react5.default.Fragment, null, routes_default);
 
 // app/javascript/components/index.jsx
 document.addEventListener("turbo:load", () => {
   const root = (0, import_client.createRoot)(
     document.body.appendChild(document.createElement("div"))
   );
-  root.render(/* @__PURE__ */ import_react4.default.createElement(App_default, null));
+  root.render(/* @__PURE__ */ import_react6.default.createElement(App_default, null));
 });
 /*! Bundled license information:
 

@@ -1,5 +1,6 @@
 import React from "react";
+import ArticleList from "./ArticleList";
 
 export default () => (
-  <b>Hello from React!</b>
+  <ArticleList />
 )
