@@ -4,7 +4,7 @@ A RSS feed aggregator
 
 ## Setup
 
-Install the require Ruby & Node versions:
+Install the required Ruby & Node versions:
 
 ```sh
 rbenv install $(cat .ruby-version)
