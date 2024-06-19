@@ -43,12 +43,6 @@ bundle exec rails db:create
 bundle exec rails db:migrate
 ```
 
-Initialize the assets:
-
-```sh
-bundle exec rake assets:precompile
-```
-
 Start the job queue:
 
 ```sh
