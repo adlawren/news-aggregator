@@ -6,7 +6,7 @@ class FetchFeedsJob < ApplicationJob
       parsed_feed.items.map do |item|
         next if FeedArticle.exists?(url: item.link)
 
-        FeedArticle.new(
+        feed.feed_articles.create!(
           description: item.description,
           published_at: item.date,
           title: item.title,

@@ -41,6 +41,7 @@ Initialize the DB:
 ```sh
 bundle exec rails db:create
 bundle exec rails db:migrate
+bundle exec rails db:seed
 ```
 
 Start the job queue:
