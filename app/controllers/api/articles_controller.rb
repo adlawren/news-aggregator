@@ -1,7 +1,7 @@
 module Api
   class ArticlesController < ApplicationController
     def index
-      render json: FeedArticle.all
+      render json: FeedArticle.where(hidden: false)
     end
 
     def destroy
