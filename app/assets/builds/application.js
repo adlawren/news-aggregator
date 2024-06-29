@@ -38850,16 +38850,29 @@ var Article = (props) => {
 var Article_default = Article;
 
 // app/javascript/components/ArticleList.jsx
+var API_URL = "http://127.0.0.1:3000";
 var ArticleList = () => {
   var [articles, setArticles] = (0, import_react2.useState)([]);
   (0, import_react2.useEffect)(() => {
-    fetch("http://127.0.0.1:3000/api/articles").then((response) => {
+    fetch(`${API_URL}/api/articles`).then((response) => {
       return response.json();
     }).then((data) => {
       setArticles(data);
     });
   }, []);
-  return /* @__PURE__ */ import_react2.default.createElement("div", null, articles.map((article) => /* @__PURE__ */ import_react2.default.createElement(Article_default, { title: article["title"], description: article["description"], url: article["url"] })));
+  function dismissArticle(id) {
+    fetch(`${API_URL}/api/articles/${id}`, { method: "DELETE" }).then((response) => {
+      if (response.ok) {
+        let updatedArticles = articles.filter((article) => article["id"] != id);
+        setArticles(updatedArticles);
+      }
+    });
+  }
+  return /* @__PURE__ */ import_react2.default.createElement("div", null, articles.map(
+    (article) => /* @__PURE__ */ import_react2.default.createElement("div", { key: article["id"] }, /* @__PURE__ */ import_react2.default.createElement(Article_default, { title: article["title"], description: article["description"], url: article["url"] }), /* @__PURE__ */ import_react2.default.createElement("button", { onClick: () => {
+      dismissArticle(article["id"]);
+    } }, "Dismiss"))
+  ));
 };
 var ArticleList_default = ArticleList;
 

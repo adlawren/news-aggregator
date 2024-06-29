@@ -1,5 +1,7 @@
 module Api
   class ArticlesController < ApplicationController
+    protect_from_forgery with: :null_session # These are REST API endpoints
+
     def index
       render json: FeedArticle.where(hidden: false)
     end
