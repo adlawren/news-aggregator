@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Article from "./Article";
 
-const API_URL = "http://127.0.0.1:3000";
+// This is set using the "define" argument in the esbuild command, to toggle the API URL between development & production
+// See package.json
+const API_URL = process.env.REACT_API_URL;
 
 const ArticleList = () => {
     var [articles, setArticles] = useState([]);
