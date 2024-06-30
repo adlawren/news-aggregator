@@ -38,6 +38,8 @@ RUN bundle install && \
 
 # Install node modules
 COPY package.json yarn.lock ./
+RUN corepack enable
+RUN corepack prepare yarn@stable --activate
 RUN yarn install --frozen-lockfile
 
 # Copy application code
@@ -64,7 +66,7 @@ COPY --from=build /rails /rails
 
 # Run and own only the runtime files as a non-root user for security
 RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
+    chown -R rails:rails db log storage tmp config
 USER rails:rails
 
 # Entrypoint prepares the database.
