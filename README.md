@@ -55,3 +55,12 @@ Start the Rails server:
 ```sh
 ./bin/dev
 ```
+
+## Basic Auth
+
+To enable HTTP Basic authentication, set `ADMIN_USERNAME` & `ADMIN_PASSWORD` in the `.env` file, for example:
+
+```sh
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=password
+```

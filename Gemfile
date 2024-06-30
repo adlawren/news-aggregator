@@ -51,6 +51,8 @@ gem "rss"
 
 gem "solid_queue"
 
+gem "devise"
+
 group :development, :test do
   gem "byebug"
 

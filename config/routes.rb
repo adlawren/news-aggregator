@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   namespace "api" do
     resources :articles, only: [:index, :destroy]
   end
+
+  # devise_for :users # TODO: Add support for login UIs
 end
