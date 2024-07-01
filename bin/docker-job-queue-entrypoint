@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+# Wait for app container to finish setup
+echo "Waiting for app to start..."
+while ! curl -s -o /dev/null app:3000; do
+    sleep 1
+done
+echo "App has started"
+
+exec "${@}"
