@@ -1,4 +1,26 @@
 services:
+  app:
+    build:
+      context: .
+      args:
+        REACT_API_URL: 127.0.0.1:3000
+        # For production testing
+        # Must also be added to the runtime environment variables below, since Docker uses separate variables for build / runtime
+        # RAILS_ENV: production
+        # BUNDLE_DEPLOYMENT: 1
+        # BUNDLE_WITHOUT: "development test" # Note that this must be added to the runtime environment variables below as well
+    environment:
+      # For HTTP Basic auth
+      ADMIN_USERNAME: # admin
+      ADMIN_PASSWORD: # password
+      DATABASE_HOST: db # Docker uses the name of the DB service as the hostname
+      DATABASE_PASSWORD: root
+      DATABASE_PORT: 3306
+      DATABASE_USERNAME: root
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/rails
   db:
     image: mysql
     restart: always
