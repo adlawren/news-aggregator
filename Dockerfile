@@ -57,7 +57,7 @@ RUN bundle exec bootsnap precompile app/ lib/
 ARG REACT_API_URL
 ENV REACT_API_URL $REACT_API_URL
 
-RUN ./bin/rails assets:precompile
+RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
 
 # Final stage for app image
