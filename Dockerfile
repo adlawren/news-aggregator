@@ -7,11 +7,7 @@ FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 # Rails app lives here
 WORKDIR /rails
 
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+ENV BUNDLE_PATH="/usr/local/bundle"
 
 
 # Throw-away build stage to reduce size of final image
@@ -19,7 +15,7 @@ FROM base as build
 
 # Install packages needed to build gems and node modules
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential curl default-libmysqlclient-dev git libvips node-gyp pkg-config python-is-python3
+    apt-get install --no-install-recommends -y build-essential curl default-libmysqlclient-dev git libvips node-gyp pkg-config python-is-python3 default-mysql-client
 
 # Install JavaScript dependencies
 ARG NODE_VERSION=22.2.0
@@ -29,6 +25,15 @@ RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz
     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
     npm install -g yarn@$YARN_VERSION && \
     rm -rf /tmp/node-build-master
+
+ARG RAILS_ENV
+ENV RAILS_ENV $RAILS_ENV
+
+ARG BUNDLE_DEPLOYMENT
+ENV BUNDLE_DEPLOYMENT $BUNDLE_DEPLOYMENT
+
+ARG BUNDLE_WITHOUT
+ENV BUNDLE_WITHOUT $BUNDLE_WITHOUT
 
 # Install application gems
 COPY Gemfile Gemfile.lock ./
@@ -52,8 +57,7 @@ RUN bundle exec bootsnap precompile app/ lib/
 ARG REACT_API_URL
 ENV REACT_API_URL $REACT_API_URL
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+RUN ./bin/rails assets:precompile
 
 
 # Final stage for app image
@@ -78,4 +82,4 @@ ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
+CMD ["./bin/rails", "server", "-b", "0.0.0.0"] # 0.0.0.0 is required in production, and it's required to connect to the container in development

@@ -53,8 +53,6 @@ gem "solid_queue"
 
 gem "devise"
 
-gem "dotenv"
-
 group :development, :test do
   gem "byebug"
 

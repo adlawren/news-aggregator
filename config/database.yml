@@ -12,18 +12,15 @@
 default: &default
   adapter: mysql2
   encoding: utf8mb4
-  host:
-  password:
+  host: <%= ENV["DATABASE_HOST"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  port:
-  username: root
+  port: <%= ENV["DATABASE_PORT"] %>
+  username: <%= ENV["DATABASE_USERNAME"] %>
 
 development:
   <<: *default
   database: news_aggregator_development
-  host: 127.0.0.1
-  password: root
-  port: 3306
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -31,9 +28,6 @@ development:
 test:
   <<: *default
   database: news_aggregator_test
-  host: 127.0.0.1
-  password: root
-  port: 3306
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -58,7 +52,3 @@ test:
 production:
   <<: *default
   database: news_aggregator_production
-  host: <%= ENV["NEWS_AGGREGATOR_DATABASE_HOST"] %>
-  username: <%= ENV["NEWS_AGGREGATOR_DATABASE_USERNAME"] %>
-  password: <%= ENV["NEWS_AGGREGATOR_DATABASE_PASSWORD"] %>
-  port: <%= ENV["NEWS_AGGREGATOR_DATABASE_PORT"] %>
