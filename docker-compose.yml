@@ -9,6 +9,7 @@ services:
         # RAILS_ENV: production
         # BUNDLE_DEPLOYMENT: 1
         # BUNDLE_WITHOUT: "development test" # Note that this must be added to the runtime environment variables below as well
+    command: ["./bin/rails", "server", "-b", "0.0.0.0"] # 0.0.0.0 is required to connect to the container in development
     environment:
       # For HTTP Basic auth
       ADMIN_USERNAME: # admin
