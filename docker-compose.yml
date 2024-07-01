@@ -13,10 +13,10 @@ services:
       # For HTTP Basic auth
       ADMIN_USERNAME: # admin
       ADMIN_PASSWORD: # password
-      DATABASE_HOST: db # Docker uses the name of the DB service as the hostname
-      DATABASE_PASSWORD: root
-      DATABASE_PORT: 3306
-      DATABASE_USERNAME: root
+      DB_HOST: db # Docker uses the name of the DB service as the hostname
+      DB_PASSWORD: root
+      DB_PORT: 3306
+      DB_USERNAME: root
     ports:
       - 3000:3000
     volumes:
