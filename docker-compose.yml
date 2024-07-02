@@ -3,7 +3,7 @@ services:
     build:
       context: .
       args:
-        REACT_API_URL: 127.0.0.1:3000
+        REACT_API_URL: http://127.0.0.1:3000
         # For production testing
         # Must also be added to the runtime environment variables below, since Docker uses separate variables for build / runtime
         # RAILS_ENV: production
