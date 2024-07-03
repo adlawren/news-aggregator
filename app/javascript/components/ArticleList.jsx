@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
+import API_URL from "../config";
 import Article from "./Article";
 
-// This is set using the "define" argument in the esbuild command, to toggle the API URL between development & production
-// See package.json
-const API_URL = process.env.REACT_API_URL;
-
-const ArticleList = () => {
-    var [articles, setArticles] = useState([]);
+const ArticleList = (props) => {
+    let [articles, setArticles] = useState([]);
 
     useEffect(() => {
-        fetch(`${API_URL}/api/articles`)
+        var url = `${API_URL}/api/articles`;
+        if (props.feedId) { // Add feed ID if present
+            url = url + `?feed_id=${props.feedId}`;
+        }
+
+        fetch(url)
             .then((response) => {
                 return response.json();
             }).then((data) => {

@@ -8,8 +8,11 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "homepage#index"
 
+  get "/feeds", to: "homepage#index" # React will render the correct page for the route
+
   namespace "api" do
     resources :articles, only: [:index, :destroy]
+    resources :feeds, only: :index
   end
 
   # devise_for :users # TODO: Add support for login UIs
