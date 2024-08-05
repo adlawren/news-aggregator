@@ -6,6 +6,9 @@ default: &default
         fetch_feeds_job:
           class: FetchFeedsJob
           schedule: "0 */6 * * *" # https://crontab.guru/#0_*/6_*_*_*
+        feed_cleanup_job:
+          class: FeedCleanupJob
+          schedule: "0 * */1 * *" # https://crontab.guru/#0_*_*/1_*_*
   workers:
     - queues: "*"
       threads: 3
