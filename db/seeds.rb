@@ -13,7 +13,7 @@
   # "https://feeds.a.dj.com/rss/RSSWSJD.xml", # WSJ Tech News
   # "https://feeds.a.dj.com/rss/RSSWorldNews.xml", # WSJ World News
   # "https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml", # WSJ US Business News
-  "https://hnrss.org/newest?points=600", # Hacker News, top posts over 600 points
+  # "https://hnrss.org/newest?points=600", # Hacker News, top posts over 600 points
   # "https://www.cbc.ca/webfeed/rss/rss-canada", # CBC, Canada
   # "https://www.cbc.ca/webfeed/rss/rss-canada-calgary", # CBC, Calgary
   # "https://www.economist.com/briefing/rss.xml", # The Economist, Briefing
@@ -23,9 +23,10 @@
   "https://www.economist.com/science-and-technology/rss.xml", # The Economist, Science and Technology
   # "https://www.economist.com/the-world-this-week/rss.xml", # The Economist, The World This Week
   # "https://www.economist.com/united-states/rss.xml", # The Economist, The United States
-  "https://www.reddit.com/r/MachineLearning/top/.rss", # r/MachineLearning
+  # "https://www.reddit.com/r/MachineLearning/top/.rss", # r/MachineLearning
   # "https://www.wired.com/feed/category/security/latest/rss", # Wired Security
   # "https://www.wired.com/feed/tag/ai/latest/rss", # Wired AI
+  "https://www.cautiousoptimism.news/feed", # Cautious Optimism Substack
 ].each do |feed_url|
   Feed.find_or_create_by!(url: feed_url)
 end
