@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe FetchFeedsJob, type: :job do
   include ActiveJob::TestHelper
+  include ActiveSupport::Testing::TimeHelpers
 
   let!(:feeds) do
     [
