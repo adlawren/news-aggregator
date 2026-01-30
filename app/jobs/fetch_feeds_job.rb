@@ -9,6 +9,7 @@ class FetchFeedsJob < ApplicationJob
           feed_article_title = item.title.respond_to?(:content) ? item.title.content : item.title
           feed_article_link = item.link.respond_to?(:href) ? item.link.href : item.link
 
+          next if item.date && item.date < 7.days.ago # Skip articles more than 7 days old
           next if FeedArticle.exists?(url: feed_article_link)
 
           feed.feed_articles.create!(

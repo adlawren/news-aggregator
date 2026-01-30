@@ -11,12 +11,19 @@ RSpec.describe FetchFeedsJob, type: :job do
   end
 
   describe "#perform" do
+    around do |example|
+      # Freeze time to match the VCR cassettes
+      travel_to Time.zone.parse("2024-06-30 12:00:00 UTC") do
+        example.run
+      end
+    end
+
     it "creates a record for each feed article" do
       VCR.use_cassette("fetch_feeds_job/fetch_feeds") do
         expect do
           described_class.perform_later
           perform_enqueued_jobs
-        end.to change { FeedArticle.count }.from(0).to(26)
+        end.to change { FeedArticle.count }.from(0).to(18)
       end
     end
 
@@ -95,7 +102,7 @@ RSpec.describe FetchFeedsJob, type: :job do
           expect do
             described_class.perform_later
             perform_enqueued_jobs
-          end.to change { FeedArticle.count }.from(0).to(20)
+          end.to change { FeedArticle.count }.from(0).to(12)
         end
       end
     end
