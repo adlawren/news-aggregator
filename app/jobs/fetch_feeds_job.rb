@@ -5,19 +5,12 @@ class FetchFeedsJob < ApplicationJob
         parsed_feed = RSS::Parser.parse(feed.url)
 
         parsed_feed.items.map do |item|
-          feed_article_description = item.respond_to?(:content) ? item.content.content : item.description
-          feed_article_title = item.title.respond_to?(:content) ? item.title.content : item.title
-          feed_article_link = item.link.respond_to?(:href) ? item.link.href : item.link
+          feed_article = feed.new_article_from_rss_item(item)
 
           next if item.date && item.date < 7.days.ago # Skip articles more than 7 days old
-          next if FeedArticle.exists?(url: feed_article_link)
+          next if FeedArticle.exists?(url: feed_article.url)
 
-          feed.feed_articles.create!(
-            description: feed_article_description,
-            published_at: item.date,
-            title: feed_article_title,
-            url: feed_article_link,
-          ).save!
+          feed_article.save!
         end
       rescue OpenURI::HTTPError => e
         next # Skip to the next feed
