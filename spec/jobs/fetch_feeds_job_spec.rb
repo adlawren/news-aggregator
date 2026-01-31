@@ -55,6 +55,32 @@ RSpec.describe FetchFeedsJob, type: :job do
       end
     end
 
+    context "validation errors" do
+      context "duplicate article URL" do
+        it "doesn't log the error" do
+          expect(Rails.logger).not_to receive(:error)
+
+          VCR.use_cassette("fetch_feeds_job/fetch_feeds_twice") do
+            described_class.perform_later
+            perform_enqueued_jobs
+          end
+        end
+      end
+
+      context "not a duplicate article URL" do
+        it "logs the error" do
+          mock_error = ActiveRecord::RecordInvalid.new(FeedArticle.new(title: "Invalid Article"))
+          allow_any_instance_of(FeedArticle).to receive(:save!).and_raise(mock_error)
+
+          expect(Rails.logger).to receive(:error).with(/Failed to save article for feed/).at_least(:once)
+          VCR.use_cassette("fetch_feeds_job/fetch_feeds") do
+            described_class.perform_later
+            perform_enqueued_jobs
+          end
+        end
+      end
+    end
+
     context "article description is mislocated" do
       let!(:feeds) { [FactoryBot.create(:feed, url: "https://www.reddit.com/r/MachineLearning/top/.rss")] }
 
